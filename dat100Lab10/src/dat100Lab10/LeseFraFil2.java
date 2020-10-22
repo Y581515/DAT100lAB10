@@ -5,34 +5,53 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 public class LeseFraFil2 {
-	
-	static String MAPPE_STR = System.getProperty("user.dir") + "/src/no/hvl/dat100/oppgave2/";
 
-	  static public void main(String[] args) throws FileNotFoundException {
+	static String MAPPE_STR = System.getProperty("user.dir") + "/src/dat100Lab10/";
 
-	  String filnavn;
+	static public void main(String[] args) {
 
-	  filnavn = JOptionPane.showInputDialog("Filnavn i mappen " + MAPPE_STR);
+		String filnavn;
 
-	  File file = new File(MAPPE_STR + filnavn);
-	  Scanner reader = new Scanner(file);
+		int antall = 0;
+		do {
+			filnavn = JOptionPane.showInputDialog("Filnavn i mappen " + MAPPE_STR);
 
-	  int linenumber = 1;
+			try {
+				File file = new File(MAPPE_STR + filnavn);
+				Scanner reader = new Scanner(file);
+				BufferedReader rreader = new BufferedReader(new FileReader(file));
 
-	  // les innhold i filen linje for linje
-	  String line;
+				int linenumber = 1;
 
-	  while (reader.hasNextLine()) {
-	  line = reader.nextLine();
-	  System.out.println(linenumber + " " + line);
-	  linenumber++;
-	  }
+				// les innhold i filen linje for linje
+				String line;
 
-	  reader.close();
+				while (reader.hasNextLine()) {
+					line = reader.nextLine();
+					System.out.println(linenumber + " " + line);
+					linenumber++;
+				}
+				reader.close();
 
-	  // JOptionPane.showMessageDialog(null, "Filen " + filnavn + " finnes
-	  // ikke. \n" + e.getMessage());
-	  }
+				while ((line = rreader.readLine()) != null) {
+
+					System.out.println(linenumber + " " + line);
+					linenumber++;
+				}
+				rreader.close();
+
+				antall = 5;
+			} catch (Exception e) {
+				antall++;
+				if (antall < 5) {
+				} else {
+					JOptionPane.showMessageDialog(null, "Filen " + filnavn + " finnesikke. \n" + e.getMessage());
+				}
+
+			}
+		} while (antall < 5);
+
+		// JOptionPane.showMessageDialog(null, "Filen " + filnavn + " finnes
+		// ikke. \n" + e.getMessage());
 	}
-
-
+}
